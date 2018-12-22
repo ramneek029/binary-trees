@@ -1,0 +1,108 @@
+#include<iostream>
+using namespace std;
+class bin_tree
+{
+    int data;
+    bin_tree *left;
+    bin_tree *right;
+public:
+    bin_tree * insrt(bin_tree * t,int n);
+    void preorder(bin_tree * ptr);
+    void inorder(bin_tree * ptr);
+    void postorder(bin_tree *ptr);
+    int depth(bin_tree *ptr);
+
+};
+
+bin_tree * bin_tree::insrt(bin_tree * t,int n)
+{
+
+    if(t==NULL)
+    {
+        t= new bin_tree;
+        t->data = n;
+        t->left =NULL;
+        t->right = NULL;
+    }
+    else if(t->data>=n)
+    {
+        t->left = insrt(t->left,n);
+    }
+    else
+        t->right = insrt(t->right,n);
+
+    return(t);
+}
+
+void bin_tree::preorder(bin_tree *ptr)
+{
+    if(ptr!= NULL)
+    {
+        cout<<ptr->data<<"\t";
+        preorder(ptr->left);
+        preorder(ptr->right);
+
+    }
+
+}
+
+void bin_tree::inorder(bin_tree * ptr)
+{
+ if(ptr!=NULL)
+ {
+ inorder(ptr->left);
+ cout<<ptr->data<<"\t";
+ inorder(ptr->right);
+
+ }
+
+}
+
+void bin_tree::postorder(bin_tree *ptr)
+{
+if(ptr!=NULL)
+ {
+ inorder(ptr->left);
+ inorder(ptr->right);
+ cout<<ptr->data<<"\t";
+
+ }
+}
+int bin_tree::depth(bin_tree *ptr)
+{
+    int d;
+    if(ptr == NULL)
+        return(0);
+    int ldepth,rdepth;
+    ldepth = depth(ptr->left);
+    rdepth = depth(ptr->right);
+    if(ldepth>rdepth)
+        d= ldepth;
+    else
+        d = rdepth;
+  return(d+1);
+}
+
+
+
+int main()
+{
+    bin_tree *root = NULL;
+    bin_tree T;
+    root = T.insrt(root,16);
+    root = T.insrt(root,7);
+    root = T.insrt(root,12);
+    root = T.insrt(root,3);
+    root = T.insrt(root,19);
+    root = T.insrt(root,26);
+
+    cout<<"preorder traversal :"<<endl;
+    T.preorder(root);
+    cout<<"\ninorder traversal :"<<endl;
+    T.inorder(root);
+    cout<<"\npost order traversal :"<<endl;
+    T.postorder(root);
+    int n;
+    n = T.depth(root);
+    cout<<"\ndepth of tree = "<<n;
+}
